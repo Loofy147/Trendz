@@ -49,11 +49,18 @@ A full‑stack application that constantly gathers trending products and sales d
 
 2. **Backend setup:**
 
+   Create a `.env` file in the `backend` directory. This file will hold your local environment variables. Add the following variables to the file:
+
+   ```
+   SECRET_KEY='a-secure-secret-key-for-development'
+   DATABASE_URL='sqlite:///db.sqlite3'
+   ```
+
+   Now, you can set up the backend:
+
    ```bash
    cd backend
    pip install -r requirements.txt
-   cp .env.example .env
-   # Update .env with your database and API keys
    python manage.py migrate
    python manage.py runserver
    ```
