@@ -3,9 +3,17 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
+    try:
+        with open(os.path.join(os.path.dirname(__file__), '.env')) as f:
+            for line in f:
+                if line.strip() and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ.setdefault(key, value.strip("'"))
+    except FileNotFoundError:
+        pass
+
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings.development")
     try:
         from django.core.management import execute_from_command_line

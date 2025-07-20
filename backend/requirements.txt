@@ -3,3 +3,11 @@ djangorestframework
 psycopg2-binary
 tenacity
 aiohttp
+python-decouple
+dj-database-url
+pytest-django
+python-dotenv
+pytest-dotenv
+daphne
+beautifulsoup4
+pytest-asyncio
