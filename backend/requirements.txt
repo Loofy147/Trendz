@@ -7,3 +7,4 @@ pytest
 pytest-django
 beautifulsoup4
 pytest-asyncio
+aioresponses
