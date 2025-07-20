@@ -3,3 +3,7 @@ djangorestframework
 psycopg2-binary
 tenacity
 aiohttp
+pytest
+pytest-django
+beautifulsoup4
+pytest-asyncio
