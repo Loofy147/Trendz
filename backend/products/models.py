@@ -14,3 +14,23 @@ class Product(models.Model):
             models.Index(fields=['name', 'price']),
             models.Index(fields=['last_scraped']),
         ]
+
+class PriceHistory(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='price_history')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['product', 'date']),
+        ]
+
+class Trend(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='trend')
+    score = models.FloatField(default=0.0)
+    last_calculated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['score']),
+        ]
