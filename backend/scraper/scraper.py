@@ -68,6 +68,11 @@ class EnhancedScraper:
             source=source
         )
 
+    async def scrape_multiple(self, urls):
+        async with self:
+            tasks = [self.scrape_product(url, 'batch_source') for url in urls]
+            return await asyncio.gather(*tasks)
+
 async def main():
     async with EnhancedScraper() as scraper:
         await scraper.scrape_product('https://fake-ecommerce.com/products', 'fake-ecommerce')
