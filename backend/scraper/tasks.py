@@ -2,6 +2,7 @@ from celery import shared_task
 from .scraper import EnhancedScraper
 import asyncio
 
+
 @shared_task(bind=True, max_retries=3)
 def scrape_products_async(self, source_urls):
     try:
