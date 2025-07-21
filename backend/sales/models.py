@@ -2,6 +2,7 @@ from django.db import models
 from products.models import Product
 from users.models import User
 
+
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -11,6 +12,6 @@ class Sale(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['product', 'created_at']),
-            models.Index(fields=['user', 'created_at']),
+            models.Index(fields=["product", "created_at"]),
+            models.Index(fields=["user", "created_at"]),
         ]

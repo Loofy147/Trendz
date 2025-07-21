@@ -3,14 +3,16 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8000/api/';
 
 const getProducts = () => {
-    return axios.get(API_URL + 'products/');
+  return axios.get(API_URL + 'products/');
 };
 
 const getProduct = (id) => {
-    return axios.get(API_URL + `products/${id}/`);
+  return axios.get(API_URL + `products/${id}/`);
 };
 
-export default {
-    getProducts,
-    getProduct,
+const productService = {
+  getProducts,
+  getProduct,
 };
+
+export default productService;

@@ -7,6 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class EnhancedScraper:
     def __init__(self):
         self.session = None
@@ -20,8 +21,7 @@ class EnhancedScraper:
         await self.session.close()
 
     @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=4, max=10)
+        stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10)
     )
     async def scrape_product(self, url, source_name):
         async with self.semaphore:  # Rate limiting
@@ -40,42 +40,44 @@ class EnhancedScraper:
                 raise
 
     async def parse_product(self, content):
-        soup = BeautifulSoup(content, 'html.parser')
-        name = soup.find('h2').text
-        description = soup.find('p', class_='description').text
-        price = float(soup.find('span', class_='price').text.replace('$', ''))
-        source_url = soup.find('a')['href']
+        soup = BeautifulSoup(content, "html.parser")
+        name = soup.find("h2").text
+        description = soup.find("p", class_="description").text
+        price = float(soup.find("span", class_="price").text.replace("$", ""))
+        source_url = soup.find("a")["href"]
         return {
-            'name': name,
-            'description': description,
-            'price': price,
-            'source_url': source_url,
+            "name": name,
+            "description": description,
+            "price": price,
+            "source_url": source_url,
         }
 
     async def save_product(self, product_data, source):
         product, created = await Product.objects.aupdate_or_create(
-            source_url=product_data['source_url'],
+            source_url=product_data["source_url"],
             defaults={
-                'name': product_data['name'],
-                'description': product_data['description'],
-                'price': product_data['price'],
-            }
+                "name": product_data["name"],
+                "description": product_data["description"],
+                "price": product_data["price"],
+            },
         )
 
         await PriceHistory.objects.acreate(
-            product=product,
-            price=product_data['price'],
-            source=source
+            product=product, price=product_data["price"], source=source
         )
 
     async def scrape_multiple(self, urls):
         async with self:
-            tasks = [self.scrape_product(url, 'batch_source') for url in urls]
+            tasks = [self.scrape_product(url, "batch_source") for url in urls]
             return await asyncio.gather(*tasks)
+
 
 async def main():
     async with EnhancedScraper() as scraper:
-        await scraper.scrape_product('https://fake-ecommerce.com/products', 'fake-ecommerce')
+        await scraper.scrape_product(
+            "https://fake-ecommerce.com/products", "fake-ecommerce"
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     asyncio.run(main())
