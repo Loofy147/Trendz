@@ -11,3 +11,4 @@ pytest-dotenv
 daphne
 beautifulsoup4
 pytest-asyncio
+django-redis
