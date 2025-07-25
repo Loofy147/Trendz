@@ -43,6 +43,7 @@ class Trend(models.Model):
     trending_score = models.FloatField(default=0.0, db_index=True)
     price_velocity = models.FloatField(default=0.0)  # Price change rate
     search_volume = models.IntegerField(default=0)
+    price_change_24h = models.FloatField(default=0.0)
     last_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
